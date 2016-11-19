@@ -1,0 +1,5 @@
+luhn-util.o: util.c /usr/include/stdc-predef.h util.h
+
+/usr/include/stdc-predef.h:
+
+util.h:
