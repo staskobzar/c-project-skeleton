@@ -74,6 +74,9 @@ Makefile.in
 /install-sh
 /missing
 /stamp-h1
+*.Po
+*.log
+Makefile
 
 # https://www.gnu.org/software/libtool/
 
@@ -100,7 +103,17 @@ tags
 *.gcno
 *.gcda
 *.gcov
+coverage.info
+coverage/
+test/*.trs
 
 # dejagnu
 *.sum
+test/site.bak
 
+confesSfsP/
+src/luhn
+test/luhn_tests
+*.tar.gz
+Gemfile.lock
+doc/Doxyfile

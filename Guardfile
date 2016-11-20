@@ -2,12 +2,13 @@
 #
 guard :shell do
   watch(/configure\.ac/) do
-    `./bootstrap`
+    system("./bootstrap")
   end
   watch(/Makefile\.am/) do
-    `./configure`
+    system("make clean")
+    system("./configure --with-coverage")
   end
-  watch(/(.+)\.(c|h)/) do
-    `make check`
+  watch(/(src|test)\/(.+)\.(c|h)/) do
+    system("make check || cat test/*_tests.log")
   end
 end

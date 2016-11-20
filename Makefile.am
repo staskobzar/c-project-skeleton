@@ -1,4 +1,4 @@
-SUBDIRS = src test doc
+SUBDIRS = doc src test
 CTAGSFLAGS= -R src
 
 if WITH_COVERAGE
