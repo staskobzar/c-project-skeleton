@@ -25,16 +25,38 @@
  * @author Stas Kobzar <staskobzar@gmail.com>
  */
 #include "luhn.h"
-#include <apr.h>
-#include <apr_general.h>
+#include <time.h>
 
+/**
+ * Taken from Rosetta Code
+ * http://rosettacode.org/wiki/Luhn_test_of_credit_card_numbers#C
+ */
 int luhn_valid (const char *num)
 {
-  return 0;
+  const int m[] = {0,2,4,6,8,1,3,5,7,9}; // mapping for rule 3
+  int i, odd = 1, sum = 0;
+
+  for (i = strlen(num); i--; odd = !odd) {
+    int digit = num[i] - '0';
+    sum += odd ? digit : m[digit];
+  }
+
+  return sum % 10;
 }
 
-int luhn_gen (char num[MAX_LEN])
+int luhn_gen (char *num, int size)
 {
+  int i, digit, remainder;
+  srand((unsigned)time(NULL));
+
+  for (i = 0; i < size; i++) {
+    digit = rand() % 10;
+    num[i] = digit + '0';
+  }
+  remainder = luhn_valid (num);
+  if (remainder == 0)
+    return 0;
+  num[size - 1] = (10 + digit - remainder) % 10 + '0';
   return 0;
 }
 

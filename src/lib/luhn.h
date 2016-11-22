@@ -27,6 +27,8 @@
 #ifndef __LUHN_H
 #define __LUHN_H
 
+#include <apr.h>
+#include <apr_general.h>
 /*
  * Maximum Luhn number length.
  * Actually, it can be any length. It's just
@@ -43,9 +45,11 @@ int luhn_valid (const char *num);
 
 /**
  * Generate valid Luhn number
- * @param number String that represents number
+ * @param mp   Memory pool
+ * @param num  String that represents number
+ * @param size Length of number to generate
  * @return int size of number
  */
-int luhn_gen (char num[MAX_LEN]);
+int luhn_gen (char *num, int size);
 
 #endif

@@ -26,8 +26,6 @@
  */
 
 #include <stdio.h>
-#include <apr.h>
-#include <apr_general.h>
 #include "util.h"
 #include "luhn.h"
 
@@ -36,8 +34,17 @@
  */
 int main(int argc, const char *argv[])
 {
-  printf("Hello World\n");
-  luhn_valid ("asds");
+  apr_pool_t *mp;
+  char *num;
+
+  apr_initialize();
+  apr_pool_create(&mp, NULL);
+
+  num = apr_palloc(mp, 12);
+  luhn_gen (num, 12);
+  printf("gen num: %s\n", num);
+  apr_pool_destroy(mp);
+  apr_terminate();
   return 0;
 }
 
