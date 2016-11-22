@@ -40,8 +40,7 @@ int main(int argc, const char *argv[])
   apr_initialize();
   apr_pool_create(&mp, NULL);
 
-  num = apr_palloc(mp, 12);
-  luhn_gen (num, 12);
+  num = luhn_gen (mp, 12);
   printf("gen num: %s\n", num);
   apr_pool_destroy(mp);
   apr_terminate();

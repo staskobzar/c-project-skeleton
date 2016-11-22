@@ -29,8 +29,15 @@
 
 #include <apr.h>
 #include <apr_general.h>
+
 /*
- * Maximum Luhn number length.
+ * Minimum Luhn number length 4 digits.
+ * Actually, the smallest Luhn number is 0.
+ * This is just this tool limit.
+ */
+#define MIN_LEN 4
+/*
+ * Maximum Luhn number length 1024 digits.
  * Actually, it can be any length. It's just
  * this tool limit.
  */
@@ -46,10 +53,11 @@ int luhn_valid (const char *num);
 /**
  * Generate valid Luhn number
  * @param mp   Memory pool
- * @param num  String that represents number
  * @param size Length of number to generate
- * @return int size of number
+ * @return  pointer to the Luhn number represented as string.
+ *          If given size is less then MIN_LEN or greater then MAX_LEN
+ *          then return NULL.
  */
-int luhn_gen (char *num, int size);
+char* luhn_gen (apr_pool_t *mp, int size);
 
 #endif

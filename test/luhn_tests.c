@@ -63,12 +63,22 @@ static void luhn_check_fail (void **state)
 
 static void luhn_gen_test (void **state)
 {
-  int i;
+  int i, size;
   for (i = 0; i < 100; i++ ) {
-    char *num = apr_palloc(*state, (i + 6) * 2);
-    assert_int_equal (0, luhn_gen (num, (i + 6) * 2 ));
+    size = i + 4;
+    char *num = luhn_gen (*state, size);
     assert_int_equal (0, luhn_valid (num));
   }
+}
+
+static void luhn_gen_min_size_test (void **state)
+{
+  assert_null (luhn_gen (*state, 2));
+}
+
+static void luhn_gen_max_size_test (void **state)
+{
+  assert_null (luhn_gen (*state, 2000));
 }
 
 int main(void)
@@ -77,6 +87,8 @@ int main(void)
     cmocka_unit_test (luhn_check_success),
     cmocka_unit_test (luhn_check_fail),
     cmocka_unit_test_setup_teardown (luhn_gen_test, setup, teardown),
+    cmocka_unit_test_setup_teardown (luhn_gen_min_size_test, setup, teardown),
+    cmocka_unit_test_setup_teardown (luhn_gen_max_size_test, setup, teardown),
   };
   return cmocka_run_group_tests_name("luhn lib tests", tests, NULL, NULL);
 }

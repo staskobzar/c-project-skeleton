@@ -44,9 +44,16 @@ int luhn_valid (const char *num)
   return sum % 10;
 }
 
-int luhn_gen (char *num, int size)
+char* luhn_gen (apr_pool_t *mp, int size)
 {
   int i, digit, remainder;
+  char *num;
+
+  if (size < MIN_LEN || size > MAX_LEN)
+    return NULL;
+
+  num = (char*)apr_palloc(mp, size);
+
   srand((unsigned)time(NULL));
 
   for (i = 0; i < size; i++) {
@@ -55,8 +62,8 @@ int luhn_gen (char *num, int size)
   }
   remainder = luhn_valid (num);
   if (remainder == 0)
-    return 0;
+    return num;
   num[size - 1] = (10 + digit - remainder) % 10 + '0';
-  return 0;
+  return num;
 }
 
