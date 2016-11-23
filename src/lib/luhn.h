@@ -30,18 +30,23 @@
 #include <apr.h>
 #include <apr_general.h>
 
-/*
+/**
  * Minimum Luhn number length 4 digits.
  * Actually, the smallest Luhn number is 0.
  * This is just this tool limit.
  */
 #define MIN_LEN 4
-/*
+/**
  * Maximum Luhn number length 1024 digits.
  * Actually, it can be any length. It's just
  * this tool limit.
  */
 #define MAX_LEN 1024
+
+/**
+ * Default Luhn number to generate.
+ */
+#define DEFAULT_LEN 16
 
 /**
  * Verify number with Luhn algorithm

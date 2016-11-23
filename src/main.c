@@ -36,14 +36,30 @@ int main(int argc, const char *argv[])
 {
   apr_pool_t *mp;
   char *num;
+  luhn_opts opts;
+  int retval = 0;
 
   apr_initialize();
   apr_pool_create(&mp, NULL);
 
-  num = luhn_gen (mp, 12);
-  printf("gen num: %s\n", num);
+  retval = parse_opts (&mp, &opts, argc, argv);
+
+  // Validate number
+  if (opts.validate == true) {
+    if ((retval = luhn_valid (opts.number)) == 0) {
+      verb_print ("OK: valid Luhn number\n");
+    } else {
+      verb_print ("FAIL: invalid Luhn number\n");
+    }
+  }
+
+  // Generate number
+  if (retval == 0 && opts.generate == true) {
+    printf ("%s\n", luhn_gen (mp, opts.len));
+  }
+
   apr_pool_destroy(mp);
   apr_terminate();
-  return 0;
+  return retval;
 }
 

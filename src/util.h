@@ -27,15 +27,54 @@
 #ifndef __UTIL_H
 #define __UTIL_H
 
+#include <apr.h>
+
+#include "luhn.h"
+
+typedef unsigned char bool;
+#define false 0
+#define true  (!false)
+
 /* enable verbosity */
-static int verbose = 0;
+static bool verbose = 0;
+
+/**
+ * Structure to store configuration parameters.
+ */
+struct luhn_opts_s {
+  bool validate;
+  bool generate;
+  char number[MAX_LEN];
+  unsigned short len;
+};
+
+/**
+ * @see luhn_opts_s
+ */
+typedef struct luhn_opts_s luhn_opts;
+
+/**
+ * Parse command line arguments.
+ * @param mp    APR memory pool
+ * @param opts  Options structure
+ * @param argc  Number of argumets
+ * @param argv  Array of arguments
+ * @return 0 if parameters successfull
+ */
+int parse_opts (apr_pool_t **mp, luhn_opts *opts, int argc, const char *argv[]);
+
+/**
+ * Initialize configuration options structure.
+ * @param luhn_opts
+ */
+void init_opts (luhn_opts *opts);
 
 /**
  * Initiate verbosity.
  * @param verbose_flag Verbosity flag to enable/disable
  * @return void
  */
-void verb_init (int verbose_flag);
+void verb_init (bool verbose_flag);
 
 /**
  * Print message. Prints message is vebosity enabled.
@@ -48,5 +87,10 @@ void verb_print (const char *msg);
  * Print usage message
  */
 void usage (void);
+
+/**
+ * Print version and copyrights and exit.
+ */
+void copyright(void);
 
 #endif
