@@ -1,0 +1,65 @@
+set tool luhn
+set test_name "Frontend test Luhn application"
+
+global LUHN
+
+# test exit status of the application when no verbose set
+set testcases_status {
+  {"Check number status"      "-c 49927398715"          9}
+  {"Generate number status"   "-g -l 2"                 10}
+  {"Generate number status"   "-g -l 2000"              10}
+  {"Invalid parameter status" "-q"                      11}
+  {"Check number status"      "--check 49927398716"     0}
+}
+
+foreach pattern $testcases_status {
+  set msg    [lindex $pattern 0]
+  set argv   [lindex $pattern 1]
+  set retval [lindex $pattern 2]
+  eval "spawn $LUHN $argv"
+
+  eval "exp_spawn $LUHN $argv"
+  set ret [exp_wait]
+  set pid         [lindex $ret 0]
+  set spawn_id    [lindex $ret 1]
+  set os_error    [lindex $ret 2]
+  set exit_status [lindex $ret 3]
+
+  if { $exit_status == $retval } {
+    pass $msg
+  } else {
+    fail $msg
+  }
+}
+
+# test verbose output against regex
+set testcases_verbose {
+  {"Check number"    "-v -c 49927398716"        "OK: valid Luhn number"}
+  {"Check number"    "--verbose --check 49927398716" "OK: valid Luhn number"}
+  {"Check number"    "-v -c 49927398715"        "FAIL: invalid Luhn number"}
+  {"Invalid parameter" "-@"                     "invalid option character"}
+  {"Generate number" "-g"                       "^[0-9]{16}"}
+  {"Generate number" "--generate"               "^[0-9]{16}"}
+  {"Generate number" "-g -l 12"                 "^[0-9]{12}"}
+  {"Generate number" "--generate --length 12"   "^[0-9]{12}"}
+  {"Generate number" "-v -g -l 2"               "FAIL: length must be beween 4 and 1024"}
+  {"Usage message"   "-h"                       "Usage: "}
+  {"Usage message"   "--help"                   "Usage: "}
+  {"Print version"   "-V"                       "luhn [0-9\.]+"}
+  {"Print version"   "--version"                "luhn [0-9\.]+"}
+  {"Invalid parameter" "--foo"                  "invalid option"}
+  {"No params prints usage" ""                  "Usage: "}
+}
+
+foreach pattern $testcases_verbose {
+  set msg    [lindex $pattern 0]
+  set argv   [lindex $pattern 1]
+  set output [lindex $pattern 2]
+  eval "spawn $LUHN $argv"
+
+  expect {
+    -re $output { pass $msg }
+    default     { fail $msg }
+  }
+}
+
