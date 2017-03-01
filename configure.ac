@@ -10,6 +10,9 @@ AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+# ISO standard C99
+AC_PROG_CC_STDC
+AM_PROG_CC_C_O
 
 ### Checks for libraries.
 

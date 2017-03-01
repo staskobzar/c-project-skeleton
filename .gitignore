@@ -69,6 +69,7 @@ Makefile.in
 /config.sub
 /configure
 /configure.scan
+/config.status
 /depcomp
 /install-sh
 /missing
