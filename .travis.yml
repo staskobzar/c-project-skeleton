@@ -5,7 +5,7 @@ os:
   - linux
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install cmake -y
+  - sudo apt-get install cmake libapr1 -y
   - bash .travis-install-cmocka.sh
 
 script: ./bootstrap && ./configure && make && make check
