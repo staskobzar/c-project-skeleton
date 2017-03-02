@@ -23,3 +23,9 @@ make cov
 #### Third party
 Inegration with TravisCI (continouos integration). Files ```.travis.yml``` and script ```.travis-install-cmocka.sh```.
 
+Current Travis CI Build Status:
+
+[![Build Status][1]][2]
+
+[1]: https://travis-ci.org/staskobzar/libamip.svg?branch=master
+[2]: https://travis-ci.org/staskobzar/libamip
