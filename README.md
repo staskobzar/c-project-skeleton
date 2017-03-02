@@ -27,5 +27,5 @@ Current Travis CI Build Status:
 
 [![Build Status][1]][2]
 
-[1]: https://travis-ci.org/staskobzar/libamip.svg?branch=master
-[2]: https://travis-ci.org/staskobzar/libamip
+[1]: https://travis-ci.org/staskobzar/c-project-skeleton.svg?branch=master
+[2]: https://travis-ci.org/staskobzar/c-project-skeleton

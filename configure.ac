@@ -24,7 +24,7 @@ fi
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # check for APR
-AC_SEARCH_LIBS(apr_palloc, [apr-1], [],
+AC_SEARCH_LIBS(apr_initialize, [apr-1], [],
         [AC_MSG_ERROR([Apache Portable Runtime lib not installed. Install libapr-1.])])
 PKG_CHECK_MODULES([APR], [apr-1], [have_cmocka="yes"])
 
